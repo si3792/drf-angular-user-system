@@ -194,9 +194,8 @@ class GoogleAuthCodeView(APIView):
         # This is a bit hacky, @TODO use python-social-auth's pipeline
         # mechanism instead
         if exchangeExternalTokenRequest.status_code is not makerequest.codes.ok:
-            # IF SOCIAL ACCOUNT TRIES TO SIGN IN BUT EMAIL IS ALREADY USED!
-            # @TODO report specific error for better handling on client-side
-            return Response(status=HTTP_400_BAD_REQUEST)
+            # If the social account's email is already used in another account, throw an error
+            return Response("User with that email already exists!", status=HTTP_400_BAD_REQUEST)
 
         getUserUrl = 'http://' + request.META['HTTP_HOST'] + '/account/'
         getUserRequest = makerequest.get(getUserUrl, data={}, headers={

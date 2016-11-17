@@ -74,6 +74,14 @@ app.directive('cdLoginPanel', function() {
                         DEBUG && console.log(JSON.parse(response.data));
                         OAuthToken.setToken(JSON.parse(response.data));
                         $timeout($location.path('/home'), 500);
+                    },function(response){
+                      // Error
+                      if(response.data = 'User with that email already exists!') {
+                        AlertModalService.alert('Error!', [
+                          'User with that email already exists!',
+                          'Maybe you have signed in through a different method.'
+                        ], 'danger');
+                      }
                     });
                 }
 
