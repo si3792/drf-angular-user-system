@@ -1,27 +1,29 @@
-  <div class='panel panel-info'>
-        <div class="panel-heading">
-            <h3 class="text-center">Login</h3>
-        </div>
-        <div class="panel-body">
-            <form name='loginForm'>
-                <div class="form-group">
-                    <label>
-                        <h4>Username</h4>
-                    </label>
-                    <input type="text" class="form-control" placeholder="Username" ng-model='loginData.username' ng-required='true'>
+<div class='panel panel-info'>
+    <div class="panel-heading">
+        <h3 class="text-center">Login</h3>
+    </div>
+    <div class="panel-body">
+        <form name='loginForm'>
+            <div class="form-group">
+                <label>
+                    <h4>Username</h4>
+                </label>
+                <input type="text" class="form-control" placeholder="Username" ng-model='loginData.username' ng-required='true'>
+            </div>
+            <div class="form-group">
+                <label>
+                    <h4>Password</h4>
+                </label>
+                <input type="password" class="form-control" placeholder="Password" ng-model='loginData.password' ng-required='true'>
+            </div>
+            <hr/>
+            <div class='container-fluid'>
+                <div class='col-sm-8 col-sm-offset-2'>
+                    <button ng-click='login()' class="btn btn-lg btn-block btn-info" ng-disabled='loginForm.$invalid'>Login</button>
                 </div>
-                <div class="form-group">
-                    <label>
-                        <h4>Password</h4>
-                    </label>
-                    <input type="password" class="form-control" placeholder="Password" ng-model='loginData.password' ng-required='true'>
-                </div>
-                <hr />
-                <div class='container-fluid'>
-                    <div class='col-sm-8 col-sm-offset-2'>
-                        <button ng-click='login()' class="btn btn-lg btn-block btn-info" ng-disabled='loginForm.$invalid'>Login</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-  </div>
+            </div>
+        </form>
+        <hr/>
+        <a class='pull-right' cd-location-changer='/register'>Create an account</a>
+    </div>
+</div>

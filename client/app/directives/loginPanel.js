@@ -1,6 +1,6 @@
-/**
- *    A template directive for displaying a login panel.
- */
+/*********************************************************
+ *    A template directive for displaying a login panel. *
+ *********************************************************/
 
 "use strict";
 

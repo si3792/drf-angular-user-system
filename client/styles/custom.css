@@ -1,0 +1,11 @@
+/* Custom CSS for coloring valid/invalid inputs in the registration form */
+
+input.ng-invalid.ng-touched.color {
+  border: 3px solid rgb(213, 12, 12);
+  background-color: rgb(238, 156, 156);
+}
+
+input.ng-valid.ng-touched.color {
+    border: 3px solid rgb(70, 193, 5);
+    background-color: rgb(158, 247, 159);
+}

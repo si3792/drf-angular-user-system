@@ -13,6 +13,10 @@ window.routes = {
         templateUrl: 'views/login.html',
         requireLogin: false,
     },
+    "/register": {
+        templateUrl: 'views/register.html',
+        requireLogin: false
+    },
     "/home": {
         templateUrl: 'views/home.html',
         requireLogin: true,

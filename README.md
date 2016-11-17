@@ -15,6 +15,7 @@ Client is provided as an NPM package. Its dependencies are:
 * angular-bootstrap-alert-modals
 * angular-route
 * angular-oauth2
+* angular-resource
 
 Developer dependencies include:
 
@@ -45,6 +46,7 @@ In constants:
 * `HTTPS` must be set to `true` when deploying over HTTPS.
 * `AUTO_REFRESH_TOKEN_INTERVAL_SECONDS` must be set according to the server's `ACCESS_TOKEN_EXPIRE_SECONDS`.  
 Recommended is 300, with `ACCESS_TOKEN_EXPIRE_SECONDS` having default value of 600
+* USERNAME and PASSWORD must have allowed length values matching the server-side settings. (In usersystem's settings.py)
 
 ## License
 

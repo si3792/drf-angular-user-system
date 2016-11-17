@@ -5,10 +5,20 @@ var DEBUG = true;
 
 /* Various constants */
 app.constant('CONSTANTS', {
-  LOCAL_OAUTH2_KEY: 'HdNeilGFzpQcTIEXe32LlzgpcSNzYosTo5krYhpk',
-  BASE_URL: 'http://localhost:8000',
-  HTTPS: false,
-  AUTO_REFRESH_TOKEN_INTERVAL_SECONDS: 300
+    LOCAL_OAUTH2_KEY: 'HdNeilGFzpQcTIEXe32LlzgpcSNzYosTo5krYhpk',
+    BASE_URL: 'http://localhost:8000',
+    HTTPS: false,
+    AUTO_REFRESH_TOKEN_INTERVAL_SECONDS: 300,
+    USERNAME_MIN_LENGTH: 6,
+    USERNAME_MAX_LENGTH: 80,
+    PASSWORD_MIN_LENGTH: 6,
+    PASSWORD_MAX_LENGTH: 80,
+});
+
+/*  By default, trailing slashes will be stripped from the calculated URLs,
+    which can pose problems with server backends that do not expect that behavior */
+app.config(function($resourceProvider) {
+    $resourceProvider.defaults.stripTrailingSlashes = false;
 });
 
 /* Configuration for angular-oauth2 */

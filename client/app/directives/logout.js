@@ -1,9 +1,9 @@
-/**
- *    A directive which performs a logout, using AuthService.
- *
- *    Example usage:
- *    <cd-logout> Click me to logout </cd-logout>
- */
+/**************************************************************
+ *    A directive which performs a logout, using AuthService. *
+ *                                                            *
+ *    Example usage:                                          *
+ *    <cd-logout> Click me to logout </cd-logout>             *
+ **************************************************************/
 
 "use strict";
 
