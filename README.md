@@ -11,6 +11,12 @@ Client is provided as an NPM package. Its dependencies are:
 
 * Angular
 * Bootstrap
+* JQuery
+* angular-bootstrap-alert-modals
+
+Developer dependencies include:
+
+* http-server
 
 ### Server
 
@@ -21,7 +27,7 @@ Server requirements include:
 * Django
 * Django Rest Framework
 
-You can install the requirements from `requirements.txt` (Preferably using `virtualenv`)
+You can install the requirements using `pip`, from `requirements.txt` (Preferably using `virtualenv`).
 
 ## License
 
