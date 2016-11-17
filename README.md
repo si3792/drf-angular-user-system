@@ -3,6 +3,26 @@ A user management system, consisting of a RESTful Django (DRF) server and an Ang
 
 It is meant to be used as a backbone for any DRF + Angular project requiring user authentication, including social authentication.
 
+## Structure
+
+### Client
+
+Client is provided as an NPM package. Its dependencies are:
+
+* Angular
+* Bootstrap
+
+### Server
+
+The main functionality is provided by the Django app `usersystem`.
+
+Server requirements include:
+
+* Django
+* Django Rest Framework
+
+You can install the requirements from `requirements.txt` (Preferably using `virtualenv`)
+
 ## License
 
 Copyright 2016  Simo Iliev

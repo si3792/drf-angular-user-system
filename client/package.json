@@ -1,0 +1,23 @@
+{
+  "name": "drf-angular-user-system-client",
+  "version": "1.0.0",
+  "description": "Angular SPA, part of drf-angular-user-system",
+  "main": "index.html",
+  "scripts": {
+    "test": "karma start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/si3792/drf-angular-user-system.git"
+  },
+  "author": "Simo Iliev <simo.t.iliev@gmail.com> (http://www.simoiliev.me/)",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/si3792/drf-angular-user-system/issues"
+  },
+  "homepage": "https://github.com/si3792/drf-angular-user-system#readme",
+  "dependencies": {
+    "angular": "^1.5.8",
+    "bootstrap": "^3.3.7"
+  }
+}
