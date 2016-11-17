@@ -1,0 +1,35 @@
+<div class='panel panel-info'>
+    <div class="panel-heading">
+        <h4 class="text-center">
+            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+            {{accountData.username}}</h4>
+    </div>
+    <div class='panel-body'>
+        <form name='aboutForm'>
+            <div class="form-group">
+                <label>
+                    <h4>First Name:</h4>
+                </label>
+                <input type="text" class="form-control" placeholder="{{accountData.first_name}}" ng-model='newAccountData.first_name'>
+            </div>
+            <div class="form-group">
+                <label>
+                    <h4>Last Name:</h4>
+                </label>
+                <input type="text" class="form-control" placeholder="{{accountData.last_name}}" ng-model='newAccountData.last_name'>
+            </div>
+            <div class="form-group">
+                <label>
+                    <h4>Email:</h4>
+                </label>
+                <input type="text" class="form-control" placeholder="{{accountData.email}}" ng-model='newAccountData.email'>
+            </div>
+            <hr/>
+            <div class='container-fluid'>
+                <div class='col-sm-8 col-sm-offset-2'>
+                    <button class="btn btn-lg btn-block btn-info" ng-click='updateProfile()'>Update profile</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -6,7 +6,7 @@
 
 app.factory('AccountService', function ($resource) {
   return {
-      about: $resource('http://127.0.0.1:8000/account/about/'),
+      account: $resource('http://127.0.0.1:8000/account/'),
       password: $resource('http://127.0.0.1:8000/account/password/')
   };
 });
