@@ -27,6 +27,7 @@ Server requirements include:
 * Django
 * Django Rest Framework
 * django-cors-middleware, for managing CORS
+* Django OAuth Toolkit, as our OAuth2 provider
 
 You can install the requirements using `pip`, from `requirements.txt` (Preferably using `virtualenv`).
 

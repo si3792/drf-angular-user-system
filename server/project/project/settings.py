@@ -35,9 +35,15 @@ CORS_ORIGIN_WHITELIST = (
 )
 
 REST_FRAMEWORK = {
+
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.ext.rest_framework.OAuth2Authentication',
+    ),
+
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
+
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
     'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',),
 }
@@ -54,6 +60,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'usersystem',
+    'oauth2_provider',
 ]
 
 MIDDLEWARE = [
