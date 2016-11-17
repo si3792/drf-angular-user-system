@@ -3,6 +3,8 @@
  *    Used in the user registration form.                                 *
  **************************************************************************/
 
+"use strict";
+
 app.directive('cdValidateUsername', function($q, RegisterService) {
     return {
         require: 'ngModel',

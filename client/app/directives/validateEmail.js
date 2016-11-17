@@ -3,6 +3,8 @@
  *    Used in the user registration form.                                      *
  *******************************************************************************/
 
+"use strict";
+
 app.directive('cdValidateEmail', function($q, RegisterService) {
     return {
         restrict: 'A',

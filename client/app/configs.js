@@ -1,3 +1,8 @@
+/*************************************************************
+ *    This file contains various configurations for the app. *
+ *************************************************************/
+
+
 "use strict";
 
 /* This must be false in production */

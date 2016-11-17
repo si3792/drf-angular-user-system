@@ -2,6 +2,8 @@
  *    Template directive for user registration panel. *
  ******************************************************/
 
+"use strict";
+
 app.directive('cdRegistrationPanel', function() {
     return {
         restrict: 'E',
