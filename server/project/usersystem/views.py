@@ -76,7 +76,7 @@ class AccountSocialView(APIView):
     """
     A simple API endpoint for checking if user has connected social account
 
-    GET retyrns 200 if user has connected social account or 404 otherwise.
+    GET returns 200 and the name of the social auth provider if user has connected social account or 404 otherwise.
     """
 
     def get(self, request):
@@ -84,7 +84,7 @@ class AccountSocialView(APIView):
         if not socAuth:
             return Response(status=HTTP_404_NOT_FOUND)
         else:
-            return Response(status=HTTP_200_OK)
+            return Response(socAuth[0].provider, status=HTTP_200_OK)
 
 
 class RegisterView(APIView):
