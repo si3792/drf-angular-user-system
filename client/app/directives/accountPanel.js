@@ -1,6 +1,6 @@
 /********************************************************************************************************************
  *    A template directive, displaying a panel for modifying the current user's data (email, first and last names). *
- *    @TODO values must be read-only when a social account is used.                                                 *
+ *    If a social account is connected, those fields are read-only, as they are generated.                          *
  ********************************************************************************************************************/
 
 "use strict";
@@ -13,6 +13,13 @@ app.directive('cdAccountPanel', function() {
 
             $scope.accountData = AccountService.account.get();
             $scope.newAccountData = {};
+
+            $scope.readOnlyAccount = true;
+            AccountService.social.get({}, function(response){
+              $scope.readOnlyAccount = true;
+            }, function(response){
+              $scope.readOnlyAccount = false;
+            });
 
             $scope.updateProfile = function() {
                 AccountService.account.save({}, $scope.newAccountData, function(response) {

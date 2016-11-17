@@ -5,7 +5,7 @@
             {{accountData.username}}</h4>
     </div>
     <div class='panel-body'>
-        <form name='aboutForm'>
+        <form name='aboutForm' ng-hide='readOnlyAccount'>
             <div class="form-group">
                 <label>
                     <h4>First Name:</h4>
@@ -31,5 +31,13 @@
                 </div>
             </div>
         </form>
+        <div ng-show="readOnlyAccount">
+          <h4>First Name:</h4>
+          <div class='well well-sm h5'> {{accountData.first_name}}</div>
+          <h4>Last Name:</h4>
+          <div class='well well-sm h5'> {{accountData.last_name}}</div>
+          <h4>Email:</h4>
+          <div class='well well-sm h5'> {{accountData.email}}</div>
+        </div>
     </div>
 </div>

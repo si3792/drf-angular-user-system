@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from usersystem.settings import PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH, LOCAL_OAUTH2_KEY
 import requests as makerequest
 from usersystem.secrets import SOCIAL_AUTH_GOOGLE_OAUTH2_KEY, SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET
+from social.apps.django_app.default.models import UserSocialAuth
 # Create your views here.
 
 
@@ -69,6 +70,21 @@ class AccountPasswordView(APIView):
         if request.user.has_usable_password():
             return Response(status=HTTP_200_OK)
         return Response(status=HTTP_404_NOT_FOUND)
+
+
+class AccountSocialView(APIView):
+    """
+    A simple API endpoint for checking if user has connected social account
+
+    GET retyrns 200 if user has connected social account or 404 otherwise.
+    """
+
+    def get(self, request):
+        socAuth = UserSocialAuth.get_social_auth_for_user(request.user)
+        if not socAuth:
+            return Response(status=HTTP_404_NOT_FOUND)
+        else:
+            return Response(status=HTTP_200_OK)
 
 
 class RegisterView(APIView):
