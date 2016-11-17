@@ -13,6 +13,8 @@ Client is provided as an NPM package. Its dependencies are:
 * Bootstrap
 * JQuery
 * angular-bootstrap-alert-modals
+* angular-route
+* angular-oauth2
 
 Developer dependencies include:
 
@@ -35,6 +37,14 @@ You can install the requirements using `pip`, from `requirements.txt` (Preferabl
 
 #### django-cors-middleware
 To allow CORS requests in production, CORS_ORIGIN_WHITELIST must be configured in the project's `settings.py`.
+
+#### configs.js
+In constants:
+* `LOCAL_OAUTH2_KEY` needs to be generated on the server and added here.
+* `BASE_URL` needs to point to the server.
+* `HTTPS` must be set to `true` when deploying over HTTPS.
+* `AUTO_REFRESH_TOKEN_INTERVAL_SECONDS` must be set according to the server's `ACCESS_TOKEN_EXPIRE_SECONDS`.  
+Recommended is 300, with `ACCESS_TOKEN_EXPIRE_SECONDS` having default value of 600
 
 ## License
 

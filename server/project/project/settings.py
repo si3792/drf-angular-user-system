@@ -34,6 +34,12 @@ CORS_ORIGIN_WHITELIST = (
     '127.0.0.1:8001'
 )
 
+OAUTH2_PROVIDER = {
+    # The number of seconds an authorization code remains valid.
+    # RFC6749 Section 4.1.2 recommends a 10 minutes (600 seconds) duration.
+    'ACCESS_TOKEN_EXPIRE_SECONDS': 600
+}
+
 REST_FRAMEWORK = {
 
     'DEFAULT_AUTHENTICATION_CLASSES': (
