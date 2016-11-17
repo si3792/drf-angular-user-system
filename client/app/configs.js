@@ -18,6 +18,7 @@ app.constant('CONSTANTS', {
     USERNAME_MAX_LENGTH: 80,
     PASSWORD_MIN_LENGTH: 6,
     PASSWORD_MAX_LENGTH: 80,
+    GOOGLE_CLIENT_ID: '231314126408-93f2l5ka9ehfbac0n014fuv33gnkopsp.apps.googleusercontent.com'
 });
 
 /*  By default, trailing slashes will be stripped from the calculated URLs,

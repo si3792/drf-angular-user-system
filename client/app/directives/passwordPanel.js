@@ -34,7 +34,7 @@ app.directive('cdPasswordPanel', function() {
                 AccountService.password.save({}, $scope.passwordChangeData, function(response) {
                     $scope.passwordChangeData = {};
                     AlertModalService.alert("Success!", "Your new password has been set!", "success");
-
+                    $scope.passwordStatus = "exists";
                 }, function(response) {
                     $scope.passwordChangeData = {};
                     AlertModalService.alert("Error!", ["Password wasn't updated.",

@@ -16,6 +16,7 @@ Client is provided as an NPM package. Its dependencies are:
 * angular-route
 * angular-oauth2
 * angular-resource
+* bootstrap-social
 
 Developer dependencies include:
 
@@ -31,6 +32,8 @@ Server requirements include:
 * Django Rest Framework
 * django-cors-middleware, for managing CORS
 * Django OAuth Toolkit, as an OAuth2 provider
+* Django rest-framework Social Oauth2, for social authentication
+* requests
 
 You can install the requirements using `pip`, from `requirements.txt` (Preferably using `virtualenv`).
 
@@ -47,6 +50,10 @@ In constants:
 * `AUTO_REFRESH_TOKEN_INTERVAL_SECONDS` must be set according to the server's `ACCESS_TOKEN_EXPIRE_SECONDS`.  
 Recommended is 300, with `ACCESS_TOKEN_EXPIRE_SECONDS` having default value of 600
 * USERNAME and PASSWORD must have allowed length values matching the server-side settings. (In usersystem's settings.py)
+
+#### settings.py (in usersystem)
+This file contains some settings for the usersystem app
+`LOCAL_OAUTH2_KEY` must be set here as well.
 
 ## License
 

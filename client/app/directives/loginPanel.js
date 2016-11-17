@@ -39,6 +39,57 @@ app.directive('cdLoginPanel', function() {
                     $scope.loginData.password = "";
                 }
 
+
+                var auth2; // GoogleAuth object
+
+                /**
+                 *    Initialize the GoogleAuth object
+                 */
+                $scope.initgoogle = function() {
+
+                    gapi.load('auth2', function() {
+                        auth2 = gapi.auth2.init({
+                            client_id: CONSTANTS.GOOGLE_CLIENT_ID,
+                            access_type: 'offline',
+                            approval_prompt: 'force' // may not be needed: Always store user refresh tokens. If your application needs a new refresh token it must send a request with the approval_prompt query parameter set to force. This will cause the user to see a dialog to grant permission to your application again.
+                        });
+                    });
+                }
+                $scope.initgoogle();
+
+                /**
+                 *    Sends Google's authorization code to our server, and stores the
+                 *    access and refresh tokens returned by it, completing the login.
+                 *    Afterwards, user is routed to /#/home/
+                 *
+                 *    @param  {String} code Google's authorization code
+                 */
+                $scope.convertToken = function(code) {
+
+                    var request = {
+                        code: code
+                    };
+
+                    $http.post(CONSTANTS.BASE_URL + '/social-auth/google-auth-code/', request).then(function(response) {
+                        DEBUG && console.log(JSON.parse(response.data));
+                        OAuthToken.setToken(JSON.parse(response.data));
+                        $timeout($location.path('/home'), 500);
+                    });
+                }
+
+                /**
+                 *    Initiates a google sign-in
+                 */
+                $scope.googleSignin = function() {
+                    auth2.grantOfflineAccess({
+                        'redirect_uri': 'postmessage'
+                    }).then(function(resp) {
+                        DEBUG && console.log(JSON.stringify(resp));
+                        $scope.convertToken(resp['code']);
+                    });
+                }
+
+
             }
         ]
     }

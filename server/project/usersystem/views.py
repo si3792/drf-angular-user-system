@@ -4,7 +4,9 @@ from rest_framework.views import APIView
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_201_CREATED, HTTP_404_NOT_FOUND
 from rest_framework.permissions import AllowAny
 from django.contrib.auth.models import User
-from usersystem.settings import PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH
+from usersystem.settings import PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH, LOCAL_OAUTH2_KEY
+import requests as makerequest
+from usersystem.secrets import SOCIAL_AUTH_GOOGLE_OAUTH2_KEY, SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET
 # Create your views here.
 
 
@@ -124,3 +126,72 @@ class RegisterCheckUsernameView(APIView):
         if User.objects.filter(username=username) or username is None:
             return Response(username, status=HTTP_400_BAD_REQUEST)
         return Response(status=HTTP_200_OK)
+
+
+class GoogleAuthCodeView(APIView):
+    """
+    An API endpoint which expects a google auth code, which is then used for social login.
+
+    POST must contain a 'code' field with the authorization code. This code is
+    exchanged for google's access and refresh tokens, which are stored on server.
+    Afterwards local access and refresh tokens are generated and returned, which are
+    then used to communicate with our API.
+
+    Go to https://developers.google.com/identity/sign-in/web/server-side-flow
+    for more information on the google server-side auth flow implemented here.
+    """
+    permission_classes = (AllowAny,)
+
+    def post(self, request):
+        # @TODO unit testing and improved error checking
+        code = request.data['code']
+        googleurl = 'https://accounts.google.com/o/oauth2/token'
+
+        # Exchange auth code for tokens
+        exchangeCodeRequest = makerequest.post(
+            googleurl,
+            data={
+                'code': code,
+                'redirect_uri': 'postmessage',
+                'client_id': SOCIAL_AUTH_GOOGLE_OAUTH2_KEY,
+                'client_secret': SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET,
+                'grant_type': 'authorization_code'
+            })
+
+        # We can now exchange the external token for a token linked to *OUR*
+        # OAuth2 provider
+        exchangeExternalTokenUrl = 'http://' + \
+            request.META['HTTP_HOST'] + '/social-auth/convert-token'
+
+        externalToken = exchangeCodeRequest.json().get('access_token', None)
+        if externalToken is None:
+            return Response(status=HTTP_400_BAD_REQUEST)
+
+        exchangeExternalTokenRequest = makerequest.post(exchangeExternalTokenUrl, data={
+            'grant_type': 'convert_token',
+            'client_id': LOCAL_OAUTH2_KEY,
+            'backend': 'google-oauth2',
+            'token': externalToken}
+        )
+
+        # Get user and add exchangeCodeRequest's (Google's) refresh token to UserSocialAuth extra_data
+        # This is a bit hacky, @TODO use python-social-auth's pipeline
+        # mechanism instead
+        if exchangeExternalTokenRequest.status_code is not makerequest.codes.ok:
+            # IF SOCIAL ACCOUNT TRIES TO SIGN IN BUT EMAIL IS ALREADY USED!
+            # @TODO report specific error for better handling on client-side
+            return Response(status=HTTP_400_BAD_REQUEST)
+
+        getUserUrl = 'http://' + request.META['HTTP_HOST'] + '/account/'
+        getUserRequest = makerequest.get(getUserUrl, data={}, headers={
+            'Authorization': 'Bearer ' + exchangeExternalTokenRequest.json()['access_token']})
+
+        refreshToken = exchangeCodeRequest.json().get('refresh_token', None)
+        if refreshToken is not None:
+            user = User.objects.all().filter(
+                username=getUserRequest.json()['username'])[0]
+            userSocial = user.social_auth.get(provider='google-oauth2')
+            userSocial.extra_data['refresh_token'] = refreshToken
+            userSocial.save()
+
+        return Response(exchangeExternalTokenRequest.text)
