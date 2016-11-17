@@ -26,8 +26,14 @@ Server requirements include:
 
 * Django
 * Django Rest Framework
+* django-cors-middleware, for managing CORS
 
 You can install the requirements using `pip`, from `requirements.txt` (Preferably using `virtualenv`).
+
+### Notes on deployment
+
+#### django-cors-middleware
+To allow CORS requests in production, CORS_ORIGIN_WHITELIST must be configured in the project's `settings.py`.
 
 ## License
 

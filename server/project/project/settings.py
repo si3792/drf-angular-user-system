@@ -27,6 +27,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# A list of origin hostnames that are authorized to make a cross-site HTTP
+# request
+CORS_ORIGIN_WHITELIST = (
+    'localhost:8001',
+    '127.0.0.1:8001'
+)
+
 
 # Application definition
 
@@ -38,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
