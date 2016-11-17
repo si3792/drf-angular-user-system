@@ -1,9 +1,10 @@
 from rest_framework.response import Response
 from usersystem.serializers import UserSerializer, UserRegisterSerializer
 from rest_framework.views import APIView
-from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_201_CREATED
+from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_201_CREATED, HTTP_404_NOT_FOUND
 from rest_framework.permissions import AllowAny
 from django.contrib.auth.models import User
+from usersystem.settings import PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH
 # Create your views here.
 
 
@@ -36,6 +37,36 @@ class AccountView(APIView):
             'last_name', request.user.last_name)
         request.user.save()
         return Response(status=HTTP_200_OK)
+
+
+class AccountPasswordView(APIView):
+    """
+    An API endpoint for password management (for the current user)
+
+    GET returns 200 if user has a password or 404 otherwise
+    POST must contain 'newPassword' field ( and 'oldPassword' if user already has a password )
+    """
+
+    def post(self, request):
+        newpass = request.data.get('newPassword', None)
+        if newpass is None or len(newpass) < PASSWORD_MIN_LENGTH or len(newpass) > PASSWORD_MAX_LENGTH:
+            return Response(status=HTTP_400_BAD_REQUEST)
+
+        if request.user.has_usable_password():
+            oldpass = request.data.get('oldPassword', None)
+            if oldpass is None or oldpass is None or not request.user.check_password(oldpass):
+                return Response(status=HTTP_400_BAD_REQUEST)
+            if oldpass == newpass:
+                return Response(status=HTTP_400_BAD_REQUEST)
+
+        request.user.set_password(newpass)
+        request.user.save()
+        return Response(status=HTTP_200_OK)
+
+    def get(self, request):
+        if request.user.has_usable_password():
+            return Response(status=HTTP_200_OK)
+        return Response(status=HTTP_404_NOT_FOUND)
 
 
 class RegisterView(APIView):
