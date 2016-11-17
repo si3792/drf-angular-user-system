@@ -37,7 +37,7 @@ Server requirements include:
 
 You can install the requirements using `pip`, from `requirements.txt` (Preferably using `virtualenv`).
 
-### Notes on deployment
+### Important Notes
 
 #### django-cors-middleware
 To allow CORS requests in production, CORS_ORIGIN_WHITELIST must be configured in the project's `settings.py`.
@@ -48,12 +48,19 @@ In constants:
 * `BASE_URL` needs to point to the server.
 * `HTTPS` must be set to `true` when deploying over HTTPS.
 * `AUTO_REFRESH_TOKEN_INTERVAL_SECONDS` must be set according to the server's `ACCESS_TOKEN_EXPIRE_SECONDS`.  
-Recommended is 300, with `ACCESS_TOKEN_EXPIRE_SECONDS` having default value of 600
-* USERNAME and PASSWORD must have allowed length values matching the server-side settings. (In usersystem's settings.py)
+Recommended is 300, with `ACCESS_TOKEN_EXPIRE_SECONDS` having default value of 600.
+* USERNAME and PASSWORD must have allowed length values matching the server-side settings. (In usersystem's settings.py).
+* `GOOGLE_CLIENT_ID` is needed for social sign-in with google, and must equal `SOCIAL_AUTH_GOOGLE_OAUTH2_KEY` in `secrets.py`.
 
 #### settings.py (in usersystem)
-This file contains some settings for the usersystem app
+This file contains some settings for the usersystem app.
 `LOCAL_OAUTH2_KEY` must be set here as well.
+
+#### Social keys management
+Right now, only Google OAuth2 is available as social login.
+To get it working, OAuth2 KEY and SECRET pair must be obtained from Google.
+These values must then be placed in usersystem's `secrets.py` (As `secrets.py` is in `.gitignore`, look at `template.secrets.py`).
+
 
 ## License
 
