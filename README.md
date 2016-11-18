@@ -65,13 +65,13 @@ To get it working, OAuth2 KEY and SECRET pair must be obtained from Google.
 These values must then be placed in usersystem's `secrets.py` (As `secrets.py` is in `.gitignore`, look at `template.secrets.py`).  
 
 __Facebook__ is also available for social login.
-To get it working, OAuth2 KEY and SECRET pair must be obtained from Facebook.
+To get it working, KEY and SECRET pair must be obtained from Facebook.
 These values must then be placed in usersystem's `secrets.py` (As `secrets.py` is in `.gitignore`, look at `template.secrets.py`).
 
 ## Further development notes
 
 The current mechanism for detecting duplicate emails when signing in through a social account
-is a bit messy (Look at `pipeline.py` as well as `loginPanel.js`'s way of reporting it'). A better way of handling this exception must be implemented.
+is a bit messy (Look at `pipeline.py` as well as `loginPanel.js`'s way of reporting it). A better way of handling this exception must be implemented.
 
 ## License
 
