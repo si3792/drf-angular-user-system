@@ -52,6 +52,7 @@ In constants:
 Recommended is 300, with `ACCESS_TOKEN_EXPIRE_SECONDS` having default value of 600.
 * USERNAME and PASSWORD must have allowed length values matching the server-side settings. (In usersystem's settings.py).
 * `GOOGLE_CLIENT_ID` is needed for social sign-in with google, and must equal `SOCIAL_AUTH_GOOGLE_OAUTH2_KEY` in `secrets.py`.
+* `FACEBOOK_CLIENT_ID` is needed for social sign-in with google, and must equal `SOCIAL_AUTH_FACEBOOK_KEY` in `secrets.py`.
 * `COOKIE_NAME` sets the name of the cookie which stores the authentication data. Default is `token` and usually shouldn't be changed.
 
 #### settings.py (in usersystem)
@@ -59,10 +60,18 @@ This file contains some settings for the usersystem app.
 `LOCAL_OAUTH2_KEY` must be set here as well.
 
 #### Social keys management
-Right now, only Google OAuth2 is available as social login.
+__Google OAuth2__ is available as social login.
 To get it working, OAuth2 KEY and SECRET pair must be obtained from Google.
+These values must then be placed in usersystem's `secrets.py` (As `secrets.py` is in `.gitignore`, look at `template.secrets.py`).  
+
+__Facebook__ is also available for social login.
+To get it working, OAuth2 KEY and SECRET pair must be obtained from Facebook.
 These values must then be placed in usersystem's `secrets.py` (As `secrets.py` is in `.gitignore`, look at `template.secrets.py`).
 
+## Further development notes
+
+The current mechanism for detecting duplicate emails when signing in through a social account
+is a bit messy (Look at `pipeline.py` as well as `loginPanel.js`'s way of reporting it'). A better way of handling this exception must be implemented.
 
 ## License
 

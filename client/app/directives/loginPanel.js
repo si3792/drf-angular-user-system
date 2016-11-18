@@ -74,14 +74,14 @@ app.directive('cdLoginPanel', function() {
                         DEBUG && console.log(JSON.parse(response.data));
                         OAuthToken.setToken(JSON.parse(response.data));
                         $timeout($location.path('/home'), 500);
-                    },function(response){
-                      // Error
-                      if(response.data = 'User with that email already exists!') {
-                        AlertModalService.alert('Error!', [
-                          'User with that email already exists!',
-                          'Maybe you have signed in through a different method.'
-                        ], 'danger');
-                      }
+                    }, function(response) {
+                        // Error
+                        if (response.data = 'User with that email already exists!') {
+                            AlertModalService.alert('Error!', [
+                                'User with that email already exists!',
+                                'Maybe you have signed in through a different method.'
+                            ], 'danger');
+                        }
                     });
                 }
 
@@ -97,6 +97,67 @@ app.directive('cdLoginPanel', function() {
                     });
                 }
 
+                /**
+                 *    Initialize the FB object
+                 */
+                window.fbAsyncInit = function() {
+                    FB.init({
+                        appId: CONSTANTS.FACEBOOK_CLIENT_ID,
+                        cookie: true, // enable cookies to allow the server to access
+                        // the session
+                        version: 'v2.8' // use graph api version 2.8
+                    });
+                };
+
+                // Load the Facebook SDK asynchronously
+                (function(d, s, id) {
+                    var js, fjs = d.getElementsByTagName(s)[0];
+                    if (d.getElementById(id)) return;
+                    js = d.createElement(s);
+                    js.id = id;
+                    js.src = "//connect.facebook.net/en_US/sdk.js";
+                    fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));
+
+                /**
+                 *    This function exchanges Facebook's access token for an access and refresh tokens
+                 *    linked to our OAuth2 provider, saves them, then redirects to /#/home, thus completing the signin
+                 *
+                 *    @param  {Object} response Facebook's response object
+                 */
+                $scope.completeFacebookLogin = function(response) {
+
+                    $http.post(CONSTANTS.BASE_URL + '/social-auth/convert-token', {
+                        grant_type: 'convert_token',
+                        client_id: CONSTANTS.LOCAL_OAUTH2_KEY,
+                        backend: 'facebook',
+                        token: response.authResponse.accessToken
+                    }).then(function(response) {
+                        DEBUG && console.log(response);
+                        // Store access and refresh tokens
+                        OAuthToken.setToken(response.data);
+                        $timeout($location.path('/home'), 500);
+                    }, function(response) {
+                        // Error
+                        if (response.status == 500) {
+                            AlertModalService.alert('Error!', [
+                                'User with that email already exists!',
+                                'Maybe you have signed in through a different method.'
+                            ], 'danger');
+                        }
+                    });
+                }
+
+                /**
+                 *    Initiates a facebook sign-in
+                 */
+                $scope.facebookSignin = function() {
+                    FB.login(function(response) {
+                        $scope.completeFacebookLogin(response);
+                    }, {
+                        scope: 'public_profile,email'
+                    });
+                }
 
             }
         ]

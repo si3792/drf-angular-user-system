@@ -1,3 +1,6 @@
+from social.exceptions import AuthException
+
+
 def reject_used_email(backend, details, user=None, *args, **kwargs):
     """
     Used in SOCIAL_AUTH_PIPELINE, this function checks if the user which is about to be
