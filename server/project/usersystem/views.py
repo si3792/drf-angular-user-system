@@ -45,6 +45,13 @@ class AccountView(APIView):
 
     def delete(self, request):
         # @TODO add tests
+
+        # If this is a Google social account, revoke its access
+        socAuth = UserSocialAuth.get_social_auth_for_user(request.user)[0]
+        if socAuth.provider == 'google-oauth2':
+            refresh_token = socAuth.extra_data.get('refresh_token', socAuth.extra_data['access_token'])
+            makerequest.post('https://accounts.google.com/o/oauth2/revoke?token=' + refresh_token)
+
         request.user.delete()
         return Response(status=HTTP_200_OK)
 
@@ -87,11 +94,11 @@ class AccountSocialView(APIView):
     """
 
     def get(self, request):
-        socAuth = UserSocialAuth.get_social_auth_for_user(request.user)
+        socAuth = UserSocialAuth.get_social_auth_for_user(request.user)[0]
         if not socAuth:
             return Response(status=HTTP_404_NOT_FOUND)
         else:
-            return Response(socAuth[0].provider, status=HTTP_200_OK)
+            return Response(socAuth.provider, status=HTTP_200_OK)
 
 
 class RegisterView(APIView):

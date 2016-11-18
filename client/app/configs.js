@@ -6,7 +6,7 @@
 "use strict";
 
 /* This must be false in production */
-var DEBUG = true;
+var DEBUG = false;
 
 /* Various constants */
 app.constant('CONSTANTS', {
