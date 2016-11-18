@@ -16,6 +16,7 @@ Client is provided as an NPM package. Its dependencies are:
 * angular-route
 * angular-oauth2
 * angular-resource
+* angular-cookies
 * bootstrap-social
 
 Developer dependencies include:
@@ -51,6 +52,7 @@ In constants:
 Recommended is 300, with `ACCESS_TOKEN_EXPIRE_SECONDS` having default value of 600.
 * USERNAME and PASSWORD must have allowed length values matching the server-side settings. (In usersystem's settings.py).
 * `GOOGLE_CLIENT_ID` is needed for social sign-in with google, and must equal `SOCIAL_AUTH_GOOGLE_OAUTH2_KEY` in `secrets.py`.
+* `COOKIE_NAME` sets the name of the cookie which stores the authentication data. Default is `token` and usually shouldn't be changed.
 
 #### settings.py (in usersystem)
 This file contains some settings for the usersystem app.

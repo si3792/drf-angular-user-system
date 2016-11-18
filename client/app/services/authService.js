@@ -5,7 +5,7 @@
 
 "use strict";
 
-app.service('AuthService', ['$q', '$timeout', 'OAuth', 'CONSTANTS', function($q, $timeout, OAuth, CONSTANTS) {
+app.service('AuthService', ['$q', '$timeout', '$cookies', 'OAuth', 'CONSTANTS', function($q, $timeout, $cookies, OAuth, CONSTANTS) {
 
     var self = this;
     self.autoRefreshTokenInterval = CONSTANTS.AUTO_REFRESH_TOKEN_INTERVAL_SECONDS * 1000;
@@ -18,6 +18,14 @@ app.service('AuthService', ['$q', '$timeout', 'OAuth', 'CONSTANTS', function($q,
      */
     self.isAuthenticated = function() {
         return OAuth.isAuthenticated();
+    }
+
+    /**
+     *    If logout cannot be performed (if server is down, for example), force logout by removing the `token` cookie.
+     */
+    self.forceLogout = function() {
+      DEBUG && console.log("Forcing logout");
+      $cookies.remove(CONSTANTS.COOKIE_NAME);
     }
 
     /**
@@ -50,6 +58,8 @@ app.service('AuthService', ['$q', '$timeout', 'OAuth', 'CONSTANTS', function($q,
             deferred.resolve(response);
         }, function(response) {
             DEBUG && console.error("Error while logging you out!");
+            // Force logout
+            self.forceLogout();
             deferred.reject(response);
         });
         return deferred.promise;

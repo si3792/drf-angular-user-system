@@ -18,7 +18,8 @@ app.constant('CONSTANTS', {
     USERNAME_MAX_LENGTH: 80,
     PASSWORD_MIN_LENGTH: 6,
     PASSWORD_MAX_LENGTH: 80,
-    GOOGLE_CLIENT_ID: '231314126408-93f2l5ka9ehfbac0n014fuv33gnkopsp.apps.googleusercontent.com'
+    GOOGLE_CLIENT_ID: '231314126408-93f2l5ka9ehfbac0n014fuv33gnkopsp.apps.googleusercontent.com',
+    COOKIE_NAME: 'token'
 });
 
 /*  By default, trailing slashes will be stripped from the calculated URLs,
@@ -41,7 +42,7 @@ app.config(['OAuthProvider', 'CONSTANTS', function(OAuthProvider, CONSTANTS) {
 
 app.config(['OAuthTokenProvider', 'CONSTANTS', function(OAuthTokenProvider, CONSTANTS) {
     OAuthTokenProvider.configure({
-        name: 'token',
+        name: CONSTANTS.COOKIE_NAME,
         options: {
             secure: CONSTANTS.HTTPS,
         }

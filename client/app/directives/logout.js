@@ -15,16 +15,15 @@ app.directive('cdLogout', ['$location', 'AuthService', 'AlertModalService', func
         template: '<a ng-transclude></a>',
         link: function(scope, elem, attr) {
             elem.bind("click", function() {
-
                 AuthService.logout().then(function(response) {
                     // Success
                     $location.path('/login');
                 }, function(response) {
                     // Error
-                    /* This can occur if connection to server is lost.
-                       In that case, the authenticating cookie 'token' should be manually removed,
-                       and user redirected to /#/login. ( @TODO )  */
-                    AlertModalService.alert('Error', 'A problem occured while logging you out.', 'danger');
+                    /* This can occur if connection to server is lost or server is down */
+                    AlertModalService.alert('Warning', 'A problem occured while logging you out.', 'warning').then(function(response){
+                      $location.path('/login');
+                    });
                 });
             });
         }

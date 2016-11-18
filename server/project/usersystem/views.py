@@ -18,6 +18,8 @@ class AccountView(APIView):
     GET returns basic information about the current user.
 
     POST expects at least one of 'email', 'first_name' or 'last_name' fields.
+
+    DELETE deletes the current user.
     """
 
     def get(self, request):
@@ -39,6 +41,11 @@ class AccountView(APIView):
         request.user.last_name = serializer.validated_data.get(
             'last_name', request.user.last_name)
         request.user.save()
+        return Response(status=HTTP_200_OK)
+
+    def delete(self, request):
+        # @TODO add tests
+        request.user.delete()
         return Response(status=HTTP_200_OK)
 
 
