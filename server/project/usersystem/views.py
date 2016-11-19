@@ -47,10 +47,13 @@ class AccountView(APIView):
         # @TODO add tests
 
         # If this is a Google social account, revoke its access
-        socAuth = UserSocialAuth.get_social_auth_for_user(request.user)[0]
-        if socAuth.provider == 'google-oauth2':
-            refresh_token = socAuth.extra_data.get('refresh_token', socAuth.extra_data['access_token'])
-            makerequest.post('https://accounts.google.com/o/oauth2/revoke?token=' + refresh_token)
+        socAuth = next(
+            iter(UserSocialAuth.get_social_auth_for_user(request.user)), None)
+        if socAuth and socAuth.provider == 'google-oauth2':
+            refresh_token = socAuth.extra_data.get(
+                'refresh_token', socAuth.extra_data['access_token'])
+            makerequest.post(
+                'https://accounts.google.com/o/oauth2/revoke?token=' + refresh_token)
 
         request.user.delete()
         return Response(status=HTTP_200_OK)
@@ -94,7 +97,8 @@ class AccountSocialView(APIView):
     """
 
     def get(self, request):
-        socAuth = UserSocialAuth.get_social_auth_for_user(request.user)[0]
+        socAuth = next(
+            iter(UserSocialAuth.get_social_auth_for_user(request.user)), None)
         if not socAuth:
             return Response(status=HTTP_404_NOT_FOUND)
         else:
@@ -208,7 +212,8 @@ class GoogleAuthCodeView(APIView):
         # This is a bit hacky, @TODO use python-social-auth's pipeline
         # mechanism instead
         if exchangeExternalTokenRequest.status_code is not makerequest.codes.ok:
-            # If the social account's email is already used in another account, throw an error
+            # If the social account's email is already used in another account,
+            # throw an error
             return Response("User with that email already exists!", status=HTTP_400_BAD_REQUEST)
 
         getUserUrl = 'http://' + request.META['HTTP_HOST'] + '/account/'

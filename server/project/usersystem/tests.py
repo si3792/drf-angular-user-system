@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from usersystem import settings
 
 
-class AccountAboutViewTest(APITestCase):
+class AccountViewTest(APITestCase):
 
     def setUp(self):
         self.user = User.objects.create(username='testuser',
@@ -13,13 +13,13 @@ class AccountAboutViewTest(APITestCase):
 
     def test_anonymous_get(self):
         client = APIClient()
-        response = client.get('/account/about/')
+        response = client.get('/account/')
         self.assertEqual(response.status_code, 401)
 
     def test_authenticated_get(self):
         client = APIClient()
         client.force_authenticate(user=self.user)
-        response = client.get('/account/about/')
+        response = client.get('/account/')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data['username'], 'testuser')
         self.assertEqual(response.data['email'], 'testuser@foo.bar')
@@ -28,13 +28,13 @@ class AccountAboutViewTest(APITestCase):
 
     def test_anonymous_post(self):
         client = APIClient()
-        response = client.post('/account/about/', {})
+        response = client.post('/account/', {})
         self.assertEqual(response.status_code, 401)
 
     def test_authenticated_valid_post(self):
         client = APIClient()
         client.force_authenticate(user=self.user)
-        response = client.post('/account/about/', {
+        response = client.post('/account/', {
             'first_name': 'newfirstname',
             'last_name': 'newlastname',
             'email': 'new@email.bar'
@@ -47,7 +47,7 @@ class AccountAboutViewTest(APITestCase):
     def test_authenticated_invalid_post(self):
         client = APIClient()
         client.force_authenticate(user=self.user)
-        response = client.post('/account/about/', {
+        response = client.post('/account/', {
             'email': 'NOTAVALIDMAIL'
         })
         self.assertEqual(response.status_code, 400)
@@ -55,8 +55,20 @@ class AccountAboutViewTest(APITestCase):
     def test_authenticated_empty_post(self):
         client = APIClient()
         client.force_authenticate(user=self.user)
-        response = client.post('/account/about/', {})
+        response = client.post('/account/', {})
         self.assertEqual(response.status_code, 400)
+
+    def test_anonymous_delete(self):
+        client = APIClient()
+        response = client.delete('/account/')
+        self.assertEqual(response.status_code, 401)
+
+    def test_authenticated_delete(self):
+        client = APIClient()
+        client.force_authenticate(user=self.user)
+        response = client.delete('/account/')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(User.objects.all().filter(username='testuser').count(), 0)
 
 
 class AccountPasswordViewTest(APITestCase):
