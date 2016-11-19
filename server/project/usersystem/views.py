@@ -67,15 +67,22 @@ class AccountPasswordView(APIView):
 
     def post(self, request):
         newpass = request.data.get('newPassword', None)
-        if newpass is None or len(newpass) < PASSWORD_MIN_LENGTH or len(newpass) > PASSWORD_MAX_LENGTH:
-            return Response(status=HTTP_400_BAD_REQUEST)
+        if newpass is None:
+            return Response({"message": "Missing 'newPassword' field"}, status=HTTP_400_BAD_REQUEST)
+
+        if len(newpass) < PASSWORD_MIN_LENGTH or len(newpass) > PASSWORD_MAX_LENGTH:
+            return Response({"message": "New password doesn't match length requirements"}, status=HTTP_400_BAD_REQUEST)
 
         if request.user.has_usable_password():
             oldpass = request.data.get('oldPassword', None)
-            if oldpass is None or oldpass is None or not request.user.check_password(oldpass):
-                return Response(status=HTTP_400_BAD_REQUEST)
+            if oldpass is None:
+                return Response({"message": "Missing 'oldPassword' field"}, status=HTTP_400_BAD_REQUEST)
+
+            if not request.user.check_password(oldpass):
+                return Response({"message": "'oldPassword' is invalid"}, status=HTTP_400_BAD_REQUEST)
+
             if oldpass == newpass:
-                return Response(status=HTTP_400_BAD_REQUEST)
+                return Response({"message": "oldPassword and newPassword are identical"}, status=HTTP_400_BAD_REQUEST)
 
         request.user.set_password(newpass)
         request.user.save()
@@ -100,7 +107,7 @@ class AccountSocialView(APIView):
         if not socAuth:
             return Response(status=HTTP_404_NOT_FOUND)
         else:
-            return Response(socAuth.provider, status=HTTP_200_OK)
+            return Response({"social_provider": socAuth.provider}, status=HTTP_200_OK)
 
 
 class RegisterView(APIView):
@@ -140,8 +147,12 @@ class RegisterCheckEmailView(APIView):
 
     def post(self, request):
         email = request.data.get('email', None)
-        if User.objects.filter(email=email) or email is None:
-            return Response(email, status=HTTP_400_BAD_REQUEST)
+        if email is None:
+            return Response({"message": "'email' field is missing"}, status=HTTP_400_BAD_REQUEST)
+
+        if User.objects.filter(email=email):
+            return Response(status=HTTP_400_BAD_REQUEST)
+
         return Response(status=HTTP_200_OK)
 
 
@@ -155,8 +166,12 @@ class RegisterCheckUsernameView(APIView):
 
     def post(self, request):
         username = request.data.get('username', None)
-        if User.objects.filter(username=username) or username is None:
-            return Response(username, status=HTTP_400_BAD_REQUEST)
+        if username is None:
+            return Response({"message": "'username' field is missing"}, status=HTTP_400_BAD_REQUEST)
+
+        if User.objects.filter(username=username):
+            return Response(status=HTTP_400_BAD_REQUEST)
+
         return Response(status=HTTP_200_OK)
 
 
@@ -177,7 +192,7 @@ class GoogleAuthCodeView(APIView):
     def post(self, request):
         code = request.data.get('code', None)
         if not code:
-            return Response("Authorization code missing", status=HTTP_400_BAD_REQUEST)
+            return Response({"message": "Authorization code missing"}, status=HTTP_400_BAD_REQUEST)
 
         # Exchange auth code for tokens
         googleurl = 'https://accounts.google.com/o/oauth2/token'
@@ -198,7 +213,7 @@ class GoogleAuthCodeView(APIView):
 
         externalToken = exchangeCodeRequest.json().get('access_token', None)
         if externalToken is None:
-            return Response(status=HTTP_400_BAD_REQUEST)
+            return Response({"message": "Server could not retrieve external tokens"}, status=HTTP_400_BAD_REQUEST)
 
         exchangeExternalTokenRequest = makerequest.post(exchangeExternalTokenUrl, data={
             'grant_type': 'convert_token',

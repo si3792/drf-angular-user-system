@@ -17,8 +17,10 @@ app.directive('cdAccountPanel', function() {
             $scope.readOnlyAccount = true;
             AccountService.social.get({}, function(response){
               $scope.readOnlyAccount = true;
+              DEBUG && console.log(response);
             }, function(response){
               $scope.readOnlyAccount = false;
+              DEBUG && console.log(response);
             });
 
             $scope.updateProfile = function() {
