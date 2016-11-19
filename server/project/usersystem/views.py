@@ -44,9 +44,7 @@ class AccountView(APIView):
         return Response(status=HTTP_200_OK)
 
     def delete(self, request):
-        # @TODO add tests
-
-        # If this is a Google social account, revoke its access
+        # If this is a Google social account, revoke its Google tokens
         socAuth = next(
             iter(UserSocialAuth.get_social_auth_for_user(request.user)), None)
         if socAuth and socAuth.provider == 'google-oauth2':
@@ -177,11 +175,12 @@ class GoogleAuthCodeView(APIView):
     permission_classes = (AllowAny,)
 
     def post(self, request):
-        # @TODO unit testing and improved error checking
-        code = request.data['code']
-        googleurl = 'https://accounts.google.com/o/oauth2/token'
+        code = request.data.get('code', None)
+        if not code:
+            return Response("Authorization code missing", status=HTTP_400_BAD_REQUEST)
 
         # Exchange auth code for tokens
+        googleurl = 'https://accounts.google.com/o/oauth2/token'
         exchangeCodeRequest = makerequest.post(
             googleurl,
             data={
