@@ -68,7 +68,8 @@ class AccountViewTest(APITestCase):
         client.force_authenticate(user=self.user)
         response = client.delete('/account/')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(User.objects.all().filter(username='testuser').count(), 0)
+        self.assertEqual(User.objects.all().filter(
+            username='testuser').count(), 0)
 
 
 class AccountPasswordViewTest(APITestCase):
@@ -180,7 +181,7 @@ class AccountPasswordViewTest(APITestCase):
         self.assertEqual(response.status_code, 400)
 
 
-class RegistrationTest(APITestCase):
+class RegisterViewTest(APITestCase):
 
     def setUp(self):
         self.user = User.objects.create(username='testuser',
@@ -308,4 +309,60 @@ class RegistrationTest(APITestCase):
             'username': 'username',
             'password': 'newpass'
         })
+        self.assertEqual(response.status_code, 400)
+
+
+class RegisterCheckEmailViewTest(APITestCase):
+
+    def setUp(self):
+        self.someUser = User.objects.create(username='testuser',
+                                            email='testuser@foo.bar',
+                                            first_name='Test',
+                                            last_name='User')
+
+    def test_check_email_free(self):
+        client = APIClient()
+        response = client.post('/register/check-email/', {
+            'email': 'available@foo.bar'
+        })
+        self.assertEqual(response.status_code, 200)
+
+    def test_check_email_used(self):
+        client = APIClient()
+        response = client.post('/register/check-email/', {
+            'email': 'testuser@foo.bar'
+        })
+        self.assertEqual(response.status_code, 400)
+
+    def test_check_email_invalid_request(self):
+        client = APIClient()
+        response = client.post('/register/check-email/', {})
+        self.assertEqual(response.status_code, 400)
+
+
+class RegisterCheckUsernameViewTest(APITestCase):
+
+    def setUp(self):
+        self.someUser = User.objects.create(username='testuser',
+                                            email='testuser@foo.bar',
+                                            first_name='Test',
+                                            last_name='User')
+
+    def test_check_username_free(self):
+        client = APIClient()
+        response = client.post('/register/check-username/', {
+            'username': 'availableUsername'
+        })
+        self.assertEqual(response.status_code, 200)
+
+    def test_check_username_used(self):
+        client = APIClient()
+        response = client.post('/register/check-username/', {
+            'username': 'testuser'
+        })
+        self.assertEqual(response.status_code, 400)
+
+    def test_check_username_invalid_request(self):
+        client = APIClient()
+        response = client.post('/register/check-username/', {})
         self.assertEqual(response.status_code, 400)
