@@ -20,9 +20,9 @@ describe('Test AccountService', function() {
             first_name: "Foo",
             last_name: "Bar"
         };
+        httpBackend.expectGET(CONSTANTS.BASE_URL + '/account/').respond(200, server_data);
 
         var data = AccountService.account.get();
-        httpBackend.expectGET(CONSTANTS.BASE_URL + '/account/').respond(200, server_data);
         httpBackend.flush();
         expect(data.username).toEqual('Username');
         expect(data.email).toEqual('email@foo.bar');
@@ -31,16 +31,25 @@ describe('Test AccountService', function() {
     });
 
     it('should check if password exists', function() {
+
         httpBackend.expectGET(CONSTANTS.BASE_URL + '/account/password/').respond(404);
-        var data = AccountService.password.get();
+
+        var data;
+        AccountService.password.get({}, {}, function(resp) {
+            data = resp;
+        }, function(resp) {
+            data = resp;
+        });
+
         httpBackend.flush();
-        expect(data.$promise.$$state.value.status).toEqual(404);
+        expect(data.status).toEqual(404);
     });
 
     it('should get social provider', function() {
 
-        var data = AccountService.social.get();
         httpBackend.expectGET(CONSTANTS.BASE_URL + '/account/social/').respond(200, '{"social_provider": "facebook"}');
+
+        var data = AccountService.social.get();
         httpBackend.flush();
         expect(data.social_provider).toEqual('facebook');
     });
