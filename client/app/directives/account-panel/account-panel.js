@@ -8,7 +8,7 @@
 app.directive('cdAccountPanel', function() {
     return {
         restrict: 'E',
-        templateUrl: 'views/accountPanel.html',
+        templateUrl: 'app/directives/account-panel/account-panel.html',
         controller: ['$scope', '$location', 'AccountService', 'AlertModalService', function($scope, $location, AccountService, AlertModalService) {
 
             $scope.accountData = AccountService.account.get();

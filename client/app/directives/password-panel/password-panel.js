@@ -7,7 +7,7 @@
 app.directive('cdPasswordPanel', function() {
     return {
         restrict: 'E',
-        templateUrl: 'views/passwordPanel.html',
+        templateUrl: 'app/directives/password-panel/password-panel.html',
         controller: ['$scope', 'AccountService', 'AlertModalService', 'CONSTANTS', function($scope, AccountService, AlertModalService, CONSTANTS) {
 
             $scope.passwordChangeData = {};

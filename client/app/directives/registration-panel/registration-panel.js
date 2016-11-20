@@ -7,7 +7,7 @@
 app.directive('cdRegistrationPanel', function() {
     return {
         restrict: 'E',
-        templateUrl: 'views/registrationPanel.html',
+        templateUrl: 'app/directives/registration-panel/registration-panel.html',
         controller: ['$scope', '$location', 'RegisterService', 'AlertModalService', 'CONSTANTS',
             function($scope, $location, RegisterService, AlertModalService, CONSTANTS) {
 

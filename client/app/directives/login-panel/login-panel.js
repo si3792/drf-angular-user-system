@@ -7,7 +7,7 @@
 app.directive('cdLoginPanel', function() {
     return {
         restrict: 'E',
-        templateUrl: 'views/loginPanel.html',
+        templateUrl: 'app/directives/login-panel/login-panel.html',
         controller: ['$scope', '$location', '$http', '$timeout', 'OAuthToken', 'AuthService', 'AlertModalService', 'CONSTANTS',
             function($scope, $location, $http, $timeout, OAuthToken, AuthService, AlertModalService, CONSTANTS) {
 
