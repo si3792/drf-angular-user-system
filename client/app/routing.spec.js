@@ -1,5 +1,7 @@
 "use strict";
 
+DEBUG = false; // Turn off console logs
+
 describe("Routing", function() {
 
     var CONSTANTS, $location, $rootScope;
@@ -7,10 +9,7 @@ describe("Routing", function() {
     function mockAuthService() {}
 
     beforeEach(module('mainApp', function($provide) {
-
         $provide.service('AuthService', mockAuthService);
-        // Turn off console logs
-        DEBUG = false;
     }));
 
     beforeEach(inject(function(_CONSTANTS_, _$location_, _$rootScope_) {

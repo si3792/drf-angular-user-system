@@ -1,5 +1,7 @@
 "use strict";
 
+DEBUG = false; // Turn off console logs
+
 describe("cd-location-changer", function() {
 
     var $location, $rootScope, $compile;
@@ -10,8 +12,6 @@ describe("cd-location-changer", function() {
     beforeEach(module('mainApp', function($provide) {
 
         $provide.service('AuthService', mockAuthService);
-        // Turn off console logs
-        DEBUG = false;
     }));
 
     beforeEach(inject(function(_$location_, _$rootScope_, _$compile_) {

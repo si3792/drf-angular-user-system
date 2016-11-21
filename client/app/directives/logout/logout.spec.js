@@ -1,5 +1,7 @@
 "use strict";
 
+DEBUG = false; // Turn off console logs
+
 describe("cd-logout", function() {
 
     var $location, $rootScope, $compile, $q;
@@ -10,11 +12,8 @@ describe("cd-logout", function() {
     function mockAlertModalService() {}
 
     beforeEach(module('mainApp', function($provide) {
-
         $provide.service('AuthService', mockAuthService);
         $provide.service('AlertModalService', mockAlertModalService);
-
-        DEBUG = false; // Turn off console logs
     }));
 
     beforeEach(inject(function(_$location_, _$rootScope_, _$compile_, _$q_) {

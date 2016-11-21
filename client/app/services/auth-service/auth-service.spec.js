@@ -1,5 +1,7 @@
 "use strict";
 
+DEBUG = false; // Turn off console logs
+
 describe('AuthService', function() {
 
     var AuthService, $httpBackend, CONSTANTS, $cookies, $q, $rootScope, $timeout;
@@ -8,9 +10,6 @@ describe('AuthService', function() {
 
     beforeEach(module('mainApp', function($provide) {
         $provide.service('OAuth', mockOAuth);
-
-        // Turn off console logs
-        DEBUG = false;
     }));
 
     beforeEach(inject(function(_AuthService_, _$httpBackend_, _CONSTANTS_, _$cookies_, _$q_, _$rootScope_, _$timeout_) {
