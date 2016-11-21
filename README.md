@@ -22,6 +22,9 @@ Client is provided as an NPM package. Its dependencies are:
 Developer dependencies include:
 
 * http-server
+* angular-mocks
+* Karma + Jasmine for testing
+* Istanbul for code coverage
 
 ### Server
 
@@ -38,7 +41,18 @@ Server requirements include:
 
 You can install the requirements using `pip`, from `requirements.txt` (Preferably using `virtualenv`).
 
-### Important Notes
+## Testing
+
+### Client
+
+`npm test` is the command for running the tests.
+Coverage report is then generated at `coverage/`.
+
+### Server
+
+`python manage.py test` runs the test suite.
+
+## Important Notes
 
 #### django-cors-middleware
 To allow CORS requests in production, CORS_ORIGIN_WHITELIST must be configured in the project's `settings.py`.
