@@ -1,3 +1,5 @@
+"use strict";
+
 describe("cd-logout", function() {
 
     var $location, $rootScope, $compile, $q;

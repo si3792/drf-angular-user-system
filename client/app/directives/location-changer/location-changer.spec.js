@@ -1,3 +1,5 @@
+"use strict";
+
 describe("cd-location-changer", function() {
 
     var $location, $rootScope, $compile;

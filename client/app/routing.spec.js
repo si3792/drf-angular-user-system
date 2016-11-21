@@ -1,3 +1,5 @@
+"use strict";
+
 describe("Routing", function() {
 
     var CONSTANTS, $location, $rootScope;
