@@ -1,13 +1,20 @@
 /*******************************************************************************************************
  *    This file defines the routing of the SPA.                                                        *
  *    Each route must specify a templateUrl, as well as if it requires login or not.                   *
- *    Additionally, routes that require login **MUST** also include waitforauth as shown. This ensures *
+ *    Additionally, routes that require auth **MUST** also include waitforauth as shown. This ensures  *
  *    the validity of access tokens before making requests with them.                                  *
  *******************************************************************************************************/
 
 "use strict";
 
-/* Definition of all routes. */
+/**
+ *    Definition of all routes
+ *
+ *    /login is the default route for Unauthenticated users.
+ *    /home is the default route for Authenticated users.
+ *
+ *    routes that require authentication **MUST** include waitforauth as shown.
+ */
 window.routes = {
     "/login": {
         templateUrl: 'views/login.html',
