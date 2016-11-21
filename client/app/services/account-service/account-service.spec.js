@@ -1,14 +1,14 @@
 "use strict";
 
-describe('Test AccountService', function() {
+describe('AccountService', function() {
 
-    var AccountService, httpBackend, CONSTANTS;
+    var AccountService, $httpBackend, CONSTANTS;
 
     beforeEach(module('mainApp'));
 
-    beforeEach(inject(function(_AccountService_, $httpBackend, _CONSTANTS_) {
+    beforeEach(inject(function(_AccountService_, _$httpBackend_, _CONSTANTS_) {
         AccountService = _AccountService_;
-        httpBackend = $httpBackend;
+        $httpBackend = _$httpBackend_;
         CONSTANTS = _CONSTANTS_;
     }));
 
@@ -20,10 +20,10 @@ describe('Test AccountService', function() {
             first_name: "Foo",
             last_name: "Bar"
         };
-        httpBackend.expectGET(CONSTANTS.BASE_URL + '/account/').respond(200, server_data);
+        $httpBackend.expectGET(CONSTANTS.BASE_URL + '/account/').respond(200, server_data);
 
         var data = AccountService.account.get();
-        httpBackend.flush();
+        $httpBackend.flush();
         expect(data.username).toEqual('Username');
         expect(data.email).toEqual('email@foo.bar');
         expect(data.first_name).toEqual('Foo');
@@ -32,7 +32,7 @@ describe('Test AccountService', function() {
 
     it('should check if password exists', function() {
 
-        httpBackend.expectGET(CONSTANTS.BASE_URL + '/account/password/').respond(404);
+        $httpBackend.expectGET(CONSTANTS.BASE_URL + '/account/password/').respond(404);
 
         var data;
         AccountService.password.get({}, {}, function(resp) {
@@ -41,16 +41,16 @@ describe('Test AccountService', function() {
             data = resp;
         });
 
-        httpBackend.flush();
+        $httpBackend.flush();
         expect(data.status).toEqual(404);
     });
 
     it('should get social provider', function() {
 
-        httpBackend.expectGET(CONSTANTS.BASE_URL + '/account/social/').respond(200, '{"social_provider": "facebook"}');
+        $httpBackend.expectGET(CONSTANTS.BASE_URL + '/account/social/').respond(200, '{"social_provider": "facebook"}');
 
         var data = AccountService.social.get();
-        httpBackend.flush();
+        $httpBackend.flush();
         expect(data.social_provider).toEqual('facebook');
     });
 

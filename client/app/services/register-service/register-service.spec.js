@@ -1,14 +1,14 @@
 "use strict";
 
-describe('Test RegisterService', function() {
+describe('RegisterService', function() {
 
-    var RegisterService, httpBackend, CONSTANTS;
+    var RegisterService, $httpBackend, CONSTANTS;
 
     beforeEach(module('mainApp'));
 
-    beforeEach(inject(function(_RegisterService_, $httpBackend, _CONSTANTS_) {
+    beforeEach(inject(function(_RegisterService_, _$httpBackend_, _CONSTANTS_) {
         RegisterService = _RegisterService_;
-        httpBackend = $httpBackend;
+        $httpBackend = _$httpBackend_;
         CONSTANTS = _CONSTANTS_;
     }));
 
@@ -21,7 +21,7 @@ describe('Test RegisterService', function() {
             last_name: "Bar",
             password: "password"
         };
-        httpBackend.expectPOST(CONSTANTS.BASE_URL + '/register/').respond(201, "BLA");
+        $httpBackend.expectPOST(CONSTANTS.BASE_URL + '/register/').respond(201, "BLA");
 
         var data;
         RegisterService.register.save({}, postData, function(resp){
@@ -30,7 +30,7 @@ describe('Test RegisterService', function() {
           data = 'error';
         });
 
-        httpBackend.flush();
+        $httpBackend.flush();
         expect(data).toEqual('success');
     });
 });
