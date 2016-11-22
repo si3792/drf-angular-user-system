@@ -24,6 +24,7 @@ module.exports = function(config) {
             'node_modules/angular-bootstrap-alert-modals/dist/angular-bootstrap-alert-modals.min.js',
             'node_modules/angular-modal-service/dst/angular-modal-service.js',
             'app/**/*.js',
+            'app/**/*.html'
         ],
 
         ngHtml2JsPreprocessor: {
@@ -38,7 +39,8 @@ module.exports = function(config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-          'app/**/!(*spec|*mock).js': ['coverage']
+          'app/**/!(*spec|*mock).js': ['coverage'],
+          'app/**/*.html': ['ng-html2js']
         },
 
 
