@@ -17,7 +17,7 @@ app.directive('cdRegistrationPanel', function() {
                     RegisterService.register.save({}, $scope.registerData, function(response) {
                         AlertModalService.alert("Welcome!", "Your new account has been successfuly created.", "success").then(
                             function() {
-                                $location.path('login/');
+                                $location.path('/login');
                             }
                         );
 
