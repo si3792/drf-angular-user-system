@@ -228,7 +228,7 @@ class GoogleAuthCodeView(APIView):
         if exchangeExternalTokenRequest.status_code is not makerequest.codes.ok:
             # If the social account's email is already used in another account,
             # throw an error
-            return Response("User with that email already exists!", status=HTTP_400_BAD_REQUEST)
+            return Response({"message": "User with that email already exists!"}, status=HTTP_400_BAD_REQUEST)
 
         getUserUrl = 'http://' + request.META['HTTP_HOST'] + '/account/'
         getUserRequest = makerequest.get(getUserUrl, data={}, headers={
@@ -242,4 +242,4 @@ class GoogleAuthCodeView(APIView):
             userSocial.extra_data['refresh_token'] = refreshToken
             userSocial.save()
 
-        return Response(exchangeExternalTokenRequest.text)
+        return Response(exchangeExternalTokenRequest.json())

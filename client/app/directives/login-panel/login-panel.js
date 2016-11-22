@@ -22,7 +22,7 @@ app.directive('cdLoginPanel', function() {
                 $scope.login = function() {
                     AuthService.login($scope.loginData).then(function(response) {
                         // Success
-                        $location.path('/main');
+                        $location.path('/home');
                     }, function(response) {
                         // Error
                         if (response.status == 401)
@@ -40,7 +40,7 @@ app.directive('cdLoginPanel', function() {
                 }
 
 
-                var auth2; // GoogleAuth object
+                $scope.auth2 = {}; // GoogleAuth object
 
                 /**
                  *    Initialize the GoogleAuth object
@@ -48,7 +48,7 @@ app.directive('cdLoginPanel', function() {
                 $scope.initgoogle = function() {
 
                     gapi.load('auth2', function() {
-                        auth2 = gapi.auth2.init({
+                        $scope.auth2 = gapi.auth2.init({
                             client_id: CONSTANTS.GOOGLE_CLIENT_ID,
                             access_type: 'offline',
                             approval_prompt: 'force' // may not be needed: Always store user refresh tokens. If your application needs a new refresh token it must send a request with the approval_prompt query parameter set to force. This will cause the user to see a dialog to grant permission to your application again.
@@ -71,17 +71,20 @@ app.directive('cdLoginPanel', function() {
                     };
 
                     $http.post(CONSTANTS.BASE_URL + '/social-auth/google-auth-code/', request).then(function(response) {
-                        DEBUG && console.log(JSON.parse(response.data));
-                        OAuthToken.setToken(JSON.parse(response.data));
+                        DEBUG && console.log(response.data);
+                        OAuthToken.setToken(response.data);
                         $timeout($location.path('/home'), 500);
                     }, function(response) {
                         // Error
-                        if (response.data = 'User with that email already exists!') {
+                        if (response.data.message == 'User with that email already exists!') {
                             AlertModalService.alert('Error!', [
                                 'User with that email already exists!',
                                 'Maybe you have signed in through a different method.'
                             ], 'danger');
-                        }
+                        } else AlertModalService.alert('Error!', [
+                            'We could not sign you in',
+                            'Error code: ' + response.status
+                        ], 'danger');
                     });
                 }
 
@@ -89,7 +92,7 @@ app.directive('cdLoginPanel', function() {
                  *    Initiates a google sign-in
                  */
                 $scope.googleSignin = function() {
-                    auth2.grantOfflineAccess({
+                    $scope.auth2.grantOfflineAccess({
                         'redirect_uri': 'postmessage'
                     }).then(function(resp) {
                         DEBUG && console.log(JSON.stringify(resp));
@@ -143,6 +146,11 @@ app.directive('cdLoginPanel', function() {
                             AlertModalService.alert('Error!', [
                                 'User with that email already exists!',
                                 'Maybe you have signed in through a different method.'
+                            ], 'danger');
+                        } else {
+                            AlertModalService.alert('Error!', [
+                                'We could not sign you in',
+                                'Error code: ' + response.status
                             ], 'danger');
                         }
                     });
