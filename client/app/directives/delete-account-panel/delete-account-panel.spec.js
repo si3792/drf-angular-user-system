@@ -33,7 +33,6 @@ describe("cd-delete-account-panel", function() {
         var element = angular.element('<cd-delete-account-panel></cd-delete-account-panel>');
         $scope = $rootScope.$new();
         compiledElement = $compile(element)($scope);
-        $scope.$digest();
     });
 
     describe("deleteAccount", function() {
@@ -55,6 +54,7 @@ describe("cd-delete-account-panel", function() {
             spyOn(mockAccountService.prototype.account, 'delete').and.callThrough();
             spyOn(mockAuthService.prototype, 'forceLogout').and.callThrough();
 
+            $scope.$digest();
             $scope.deleteAccount();
             $scope.$digest();
             expect($location.path()).toEqual('/login');

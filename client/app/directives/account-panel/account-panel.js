@@ -23,7 +23,7 @@ app.directive('cdAccountPanel', function() {
               DEBUG && console.log(response);
             });
 
-            $scope.updateProfile = function() {
+            $scope.updateAccount = function() {
                 AccountService.account.save({}, $scope.newAccountData, function(response) {
                     $scope.newAccountData = {};
                     $scope.accountData = AccountService.account.get();
