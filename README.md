@@ -57,6 +57,12 @@ Coverage report is then generated at `coverage/`.
 #### django-cors-middleware
 To allow CORS requests in production, CORS_ORIGIN_WHITELIST must be configured in the project's `settings.py`.
 
+### Client routing
+
+Routing configuration is stored in `routing.js`.  
+Right now `/login` and `/home` are required as default routes for Unauthenticated and Authenticated users respectively.
+Any number of other routes can be defined in `window.routes` in the same way (using the Route factory).
+
 #### configs.js
 In constants:
 * `LOCAL_OAUTH2_KEY` needs to be generated on the server and added here.

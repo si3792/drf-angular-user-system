@@ -32,11 +32,11 @@ app.config(['$routeProvider', function($routeProvider) {
     /**
      *    Definition of all routes
      *
-     *    /login is the route for Unauthenticated users.
-     *      When trying to access routes for authenticated users, unauthenticated users will be redirected here.
+     *    /login is the default route for Unauthenticated users.
+     *      When trying to access root or routes for authenticated users, unauthenticated users will be redirected here.
      *
-     *    /home is the route for Authenticated users.
-     *      When trying to access routes for unauthenticated users, authenticated users will be redirected here.
+     *    /home is the default route for Authenticated users.
+     *      When trying to access root or routes for unauthenticated users, authenticated users will be redirected here.
      *
      */
     window.routes = {
