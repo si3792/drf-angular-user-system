@@ -36,7 +36,7 @@ CORS_ORIGIN_WHITELIST = (
 )
 
 OAUTH2_PROVIDER = {
-    # The number of seconds an authorization code remains valid.
+    # The number of seconds an access token remains valid.
     # RFC6749 Section 4.1.2 recommends a 10 minutes (600 seconds) duration.
     'ACCESS_TOKEN_EXPIRE_SECONDS': 600
 }

@@ -20,7 +20,7 @@ app.constant('CONSTANTS', {
     PASSWORD_MAX_LENGTH: 80,
     GOOGLE_CLIENT_ID: '231314126408-93f2l5ka9ehfbac0n014fuv33gnkopsp.apps.googleusercontent.com',
     FACEBOOK_CLIENT_ID: '1195143617226926',
-    COOKIE_NAME: 'token'
+    COOKIE_NAME: 'token' // Sets the name of the auth-storing cookie. Usually shouldn't be changed.
 });
 
 /*  By default, trailing slashes will be stripped from the calculated URLs,
