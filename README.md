@@ -18,6 +18,17 @@ It is meant to be used as a backbone for any DRF + Angular project requiring use
 
 [Check out a working demo here.](http://simoiliev.me/usersystem.html)
 
+### Index
+
+1. [Overview](#overview)
+2. [Technologies](#technologies)
+3. [Setup & Configuration](#setup)
+4. [Additional Configurations](#additional)
+5. [Testing](#testing)
+6. [Deployment considerations](#deployment)
+7. [Further development notes](#further)
+8. [License](#license)
+
 **! Note that social authentication is disabled for the demo.**
 
 ## Technologies
