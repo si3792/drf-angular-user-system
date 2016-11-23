@@ -10,8 +10,8 @@ It is meant to be used as a backbone for any DRF + Angular project requiring use
 
 - Completely separated Server and Client
 - User registraton, authentication and basic management (update account information and delete account)
-- Social signin through Facebook and Google
-- Google signin implements authorization code grant, which allows for server calls to Google's API.
+- Social sign in through Facebook and Google
+- Google sign in implements authorization code grant, which allows for server calls to Google's API.
 - Simple client routing system
 
 ### Demo
@@ -115,7 +115,7 @@ However, in order to get the social authentication working, some additional conf
 
 #### Google OAuth2
 
-To get Google signin working, OAuth2 KEY and SECRET pair must be obtained from Google. These values must then be placed in `server/project/usersystem/secrets.py`. The key must also be available to the client, so go to `client/app/configs.js` and place it in `GOOGLE_CLIENT_ID`.
+To get Google sign in working, OAuth2 KEY and SECRET pair must be obtained from Google. These values must then be placed in `server/project/usersystem/secrets.py`. The key must also be available to the client, so go to `client/app/configs.js` and place it in `GOOGLE_CLIENT_ID`.
 
 #### Facebook
 
