@@ -1,43 +1,51 @@
 /*******************************************************************************************************
  *    This file defines the routing of the SPA.                                                        *
  *    Each route must specify a templateUrl, as well as if it requires login or not.                   *
- *    Additionally, routes that require auth **MUST** also include waitforauth as shown. This ensures  *
- *    the validity of access tokens before making requests with them.                                  *
  *******************************************************************************************************/
 
 "use strict";
 
-/**
- *    Definition of all routes
- *
- *    /login is the default route for Unauthenticated users.
- *    /home is the default route for Authenticated users.
- *
- *    routes that require authentication **MUST** include waitforauth as shown.
- */
-window.routes = {
-    "/login": {
-        templateUrl: 'views/login.html',
-        requireLogin: false,
-    },
-    "/register": {
-        templateUrl: 'views/register.html',
-        requireLogin: false
-    },
-    "/home": {
-        templateUrl: 'views/home.html',
-        requireLogin: true,
-        resolve: {
-            waitforauth: function(AuthService) {
-                return AuthService.autoRefreshToken();
-            }
-        }
-    }
-};
-
 app.config(['$routeProvider', function($routeProvider) {
 
-    //this loads up our routes dynamically from the previous object
+    /**
+     *    Factory for Route objects, see window.routes below for usage.
+     *
+     *    @param {String} templateUrl  Location of the template to render
+     *    @param {Boolean} requireLogin Flag for whether the route requires authentication.
+     */
+    var Route = function(templateUrl, requireLogin) {
+
+        var route = {};
+        route.templateUrl = templateUrl;
+        route.requireLogin = requireLogin;
+
+        if (requireLogin) {
+            route.resolve = {};
+            route.resolve.waitforauth = function(AuthService) {
+                return AuthService.autoRefreshToken();
+            };
+        }
+        return route;
+    };
+
+
+    /**
+     *    Definition of all routes
+     *
+     *    /login is the route for Unauthenticated users.
+     *      When trying to access routes for authenticated users, unauthenticated users will be redirected here.
+     *
+     *    /home is the route for Authenticated users.
+     *      When trying to access routes for unauthenticated users, authenticated users will be redirected here.
+     *
+     */
+    window.routes = {
+        "/login": Route('views/login.html', false),
+        "/home": Route('views/home.html', true),
+        "/register": Route('views/register.html', false)
+    };
+
+    //this loads up our routes dynamically from window.routes
     for (var path in window.routes) {
         $routeProvider.when(path, window.routes[path]);
     }
