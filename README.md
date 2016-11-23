@@ -1,5 +1,7 @@
 # drf-angular-user-system
 
+![drf-angular-user-system](/drf-angular-user-system.png)
+
 ## Overview
 
 A user management system, consisting of a RESTful Django (DRF) server and an AngularJS SPA client.
