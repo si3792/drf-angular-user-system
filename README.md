@@ -22,7 +22,7 @@ It is meant to be used as a backbone for any DRF + Angular project requiring use
 
 1. [Overview](#overview)
 2. [Technologies](#technologies)
-3. [Setup & Configuration](#setup-&-configuration)
+3. [Setup and Configuration](#setup-and-configuration)
 4. [Additional Configurations](#additional-configurations)
 5. [Testing](#testing)
 6. [Deployment considerations](#deployment-considerations)
@@ -68,7 +68,7 @@ Server requirements include:
 - Django rest-framework Social Oauth2, for social authentication
 - requests
 
-## Setup & Configuration
+## Setup and Configuration
 
 After cloning the repository, both the server and client need to be configured:
 
