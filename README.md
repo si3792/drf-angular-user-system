@@ -154,6 +154,7 @@ Apart from the [standard deployment checklist for django projects](https://docs.
 
   - `BASE_URL` needs to point to the server
   - `HTTPS` **must** be set to `true` when using HTTPS.
+  - `DEBUG` must be set to `false` to turn off console logs
 
 ## Further development notes
 
