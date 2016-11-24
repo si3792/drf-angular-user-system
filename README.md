@@ -14,7 +14,7 @@ It is meant to be used as a backbone for any DRF + Angular project requiring use
 - User registraton, authentication and basic management (update account information and delete account)
 - Social sign in through Facebook and Google
 - Google sign in implements authorization code grant, which allows for server calls to Google's API.
-- Simple client routing system
+- Configurable routing system for the client
 
 ### Demo
 
