@@ -4,17 +4,20 @@
 
 ## Overview
 
-A user management system, consisting of a RESTful Django (DRF) server and an AngularJS SPA client.
+A user management system, consisting of a Django (DRF) server exposing a REST API and an Angular single page app consuming it.
 
 It is meant to be used as a backbone for any DRF + Angular project requiring user authentication, including social authentication.
 
 ### Features
 
 - Completely separated Server and Client
-- User registraton, authentication and basic management (update account information and delete account)
-- Social sign in through Facebook and Google
-- Google sign in implements authorization code grant, which allows for server calls to Google's API.
-- Configurable routing system for the client
+- User registraton, authentication and basic management
+  - **Django OAuth Toolkit** is used as an OAuth2 provider
+  - User registration with form validation and async validators
+  - User authentication, update & delete
+  - **Social sign in** with Facebook and Google
+  - Google sign in implements authorization code grant, which allows for server calls to Google's API.
+- Configurable routing system for the Client
 
 ### Demo
 
