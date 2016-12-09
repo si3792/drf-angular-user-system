@@ -21,7 +21,7 @@ It is meant to be used as a backbone for any DRF + Angular project requiring use
 
 ### Demo
 
-[Check out a working demo here.](http://simoiliev.me/usersystem.html)
+[Check out a sample website for appointment scheduling built on top of it.](http://simoiliev.me/icough.html)
 
 **Note that social authentication is disabled for the demo!**
 
