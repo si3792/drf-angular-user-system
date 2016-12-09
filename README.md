@@ -23,6 +23,8 @@ It is meant to be used as a backbone for any DRF + Angular project requiring use
 
 [Check out a sample website for appointment scheduling built on top of it.](http://simoiliev.me/icough.html)
 
+If you want the source code for this website, it's available [here](https://github.com/si3792/icough).
+
 **Note that social authentication is disabled for the demo!**
 
 ### Index
