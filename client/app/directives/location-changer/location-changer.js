@@ -6,6 +6,8 @@
  *    <a cd-location-changer='/home'> Click me to go to /#/home </a> *
  *********************************************************************/
 
+"use strict";
+
 app.directive('cdLocationChanger', ['$location', function($location) {
     return {
         restrict: 'A',
